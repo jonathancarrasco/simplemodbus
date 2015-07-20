@@ -1,5 +1,4 @@
 #include "SimpleModbusMaster.h"
-#include "HardwareSerial.h"
 
 // SimpleModbusMasterV2rev2
 
@@ -28,7 +27,6 @@ unsigned int total_no_of_packets;
 Packet* packetArray; // packet starting address
 Packet* packet; // current packet
 unsigned int* register_array; // pointer to masters register array
-HardwareSerial* ModbusPort;
 
 // function definitions
 void idle();
@@ -210,11 +208,11 @@ void waiting_for_turnaround()
 // get the serial data from the buffer
 void waiting_for_reply()
 {
-	if ((*ModbusPort).available()) // is there something to check?
+	if ((Serial1).available()) // is there something to check?
 	{
 		unsigned char overflowFlag = 0;
 		buffer = 0;
-		while ((*ModbusPort).available())
+		while ((Serial1).available())
 		{
 			// The maximum number of bytes is limited to the serial buffer size 
       // of BUFFER_SIZE. If more bytes is received than the BUFFER_SIZE the 
@@ -222,13 +220,13 @@ void waiting_for_reply()
       // all the data is cleared from the receive buffer, while the slave is 
       // still responding.
 			if (overflowFlag) 
-				(*ModbusPort).read();
+				(Serial1).read();
 			else
 			{
 				if (buffer == BUFFER_SIZE)
 					overflowFlag = 1;
 			
-				frame[buffer] = (*ModbusPort).read();
+				frame[buffer] = (Serial1).read();
 				buffer++;
 			}
 			// This is not 100% correct but it will suffice.
@@ -400,8 +398,7 @@ void processSuccess()
 	delayStart = millis(); // start the turnaround delay
 }
   
-void modbus_configure(HardwareSerial* SerialPort,
-											long baud,
+void modbus_configure(long baud,
 											unsigned char byteFormat,
 											long _timeout, 
 											long _polling, 
@@ -446,8 +443,7 @@ void modbus_configure(HardwareSerial* SerialPort,
 	packetArray = _packets;
 	register_array = _register_array;
 	
-	ModbusPort = SerialPort;
-	(*ModbusPort).begin(baud, byteFormat);
+	(Serial1).begin(baud, byteFormat);
 	
 	pinMode(TxEnablePin, OUTPUT);
   digitalWrite(TxEnablePin, LOW);
@@ -498,9 +494,9 @@ void sendPacket(unsigned char bufferSize)
 	digitalWrite(TxEnablePin, HIGH);
 		
 	for (unsigned char i = 0; i < bufferSize; i++)
-		(*ModbusPort).write(frame[i]);
+		(Serial1).write(frame[i]);
 		
-	(*ModbusPort).flush();
+	(Serial1).flush();
 	
 	delayMicroseconds(frameDelay);
 	
