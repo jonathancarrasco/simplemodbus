@@ -1,0 +1,7 @@
+{
+  "name": "SimpleModbusMaster",
+  "author": " <bester.j...@gmail.com>",
+  "license": "GNU GPL v3",
+  "version": "2",
+  "description": "Modbus Master library"
+}
