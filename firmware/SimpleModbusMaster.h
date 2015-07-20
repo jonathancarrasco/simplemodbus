@@ -80,7 +80,7 @@
    Arduino Serial ring buffer which is 64 bytes.
 */
 
-#include "Arduino.h"
+//#include "Arduino.h"
 
 #define COIL_OFF 0x0000 // Function 5 OFF request is 0x0000
 #define COIL_ON 0xFF00 // Function 5 ON request is 0xFF00
