@@ -131,7 +131,7 @@ void modbus_construct(Packet *_packet,
 											unsigned int data,
 											unsigned _local_start_address);
 											
-void modbus_configure(HardwareSerial* SerialPort,
+void modbus_configure(
 											long baud, 
 											unsigned char byteFormat,
 											long _timeout, 
