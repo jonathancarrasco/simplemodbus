@@ -1,7 +1,7 @@
 #ifndef SIMPLE_MODBUS_MASTER_H
 #define SIMPLE_MODBUS_MASTER_H
 
-#include "Arduino.h"
+#include "application.h"
 // SimpleModbusMasterV2r2
 
 /* 
