@@ -443,7 +443,7 @@ void modbus_configure(long baud,
 	packetArray = _packets;
 	register_array = _register_array;
 	
-	(Serial1).begin(baud, byteFormat);
+	(Serial1).begin(baud);
 	
 	pinMode(TxEnablePin, OUTPUT);
   digitalWrite(TxEnablePin, LOW);
